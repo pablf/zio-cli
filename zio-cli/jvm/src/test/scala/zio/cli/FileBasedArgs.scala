@@ -59,7 +59,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
         _ <- cleanUpSampleConfigFiles2(cwd: Path, homeDir: Path, command)
 
-      } yield assertTrue(res == "fileText")
+      } yield assertTrue(res == Some("fileText"))
     }
   )
 
