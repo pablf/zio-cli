@@ -136,11 +136,11 @@ object FileBasedArgs extends ZIOSpecDefault {
           name = "cliApp",
           version = "0",
           summary = HelpDoc.Span.empty,
-          command = Command("someCommand", Options.text("opt")),
+          command = Command("someOtherCommand", Options.text("opt")),
         ) {
           case text: String => ZIO.succeed(text)
         }
-        res <- cliApp.run(List("someCommand", "--opt", "inputText"))
+        res <- cliApp.run(List("someOtherCommand", "--opt", "inputText"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -151,7 +151,7 @@ object FileBasedArgs extends ZIOSpecDefault {
       for {
         // Create Sample config files
         cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
-        command = "someCommandB"
+        command = "someOtherCommandB"
         cliApp = CliApp.make(
           name = "cliApp",
           version = "0",
@@ -171,7 +171,7 @@ object FileBasedArgs extends ZIOSpecDefault {
       for {
         // Create Sample config files
         cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
-        command = "someCommandD"
+        command = "someOtherCommandD"
         cliApp = CliApp.make(
           name = "cliApp",
           version = "0",
