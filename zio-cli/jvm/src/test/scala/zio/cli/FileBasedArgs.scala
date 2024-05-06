@@ -100,6 +100,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         }
         res <- cliApp.run(List(command, "4"))
 
+        
         // Check if the func checkAndGetOptionsFilePaths can
 
         _ <- cleanUpSampleConfigFiles2(cwd, command)
