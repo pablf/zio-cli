@@ -49,17 +49,17 @@ object FileBasedArgs extends ZIOSpecDefault {
           name = "cliApp",
           version = "0",
           summary = HelpDoc.Span.empty,
-          command = Command("someCommand", Args.text("arg")),
+          command = Command("someCommand", Options.text("opt")),
         ) {
           case text: String => ZIO.succeed(text)
         }
-        res <- cliApp.run(List("someCommand", "inputText"))
+        res <- cliApp.run(List("someCommand", "--opt", "inputText"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
         _ <- cleanUpSampleConfigFiles2(cwd, "someCommand")
 
-      } yield assertTrue(res == Some("fileText"))
+      } yield assertTrue(res == Some("inputText"))
     }
   )
 
@@ -82,7 +82,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
   def createSampleConfigFiles2(cwd: Path, command: String = "testApp"): IO[IOException, Unit] =
     ZIO.attempt {
-      Files.write(Paths.get(cwd.toString(), s".$command"), java.util.Arrays.asList("arg=fileText"));
+      Files.write(Paths.get(cwd.toString(), s".$command"), java.util.Arrays.asList("--opt=fileText"));
 
       ()
     }.refineToOrDie[IOException]
