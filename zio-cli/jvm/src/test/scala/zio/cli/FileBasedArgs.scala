@@ -87,17 +87,18 @@ object FileBasedArgs extends ZIOSpecDefault {
       for {
         // Create Sample config files
         cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
-        command = "someCommandC"
+        command = "someCommandCLeft"
+        command2 = "someCommandCRight"
         _       <- createSampleConfigFiles2(cwd, command)
         cliApp = CliApp.make(
           name = "cliApp",
           version = "0",
           summary = HelpDoc.Span.empty,
-          command = Command(command, Options.text("opt"), Args.integer("num")),
+          command = Command(command, Options.text("opt"), Args.integer("num")) | Command(command2, Options.text("opt"), Args.integer("num")),
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List("4"))
+        res <- cliApp.run(List(command, "4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -161,6 +162,27 @@ object FileBasedArgs extends ZIOSpecDefault {
           case text => ZIO.succeed(text)
         }
         res <- cliApp.run(List("--opt", "inputText", "4"))
+
+        // Check if the func checkAndGetOptionsFilePaths can
+
+
+      } yield assertTrue(res == Some(("inputText", BigInt(4))))
+    },
+    test("not failing test 3") {
+      for {
+        // Create Sample config files
+        cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
+        command = "someOtherCommandCLeft"
+        command2 = "someOtherCommandCRight"
+        cliApp = CliApp.make(
+          name = "cliApp",
+          version = "0",
+          summary = HelpDoc.Span.empty,
+          command = Command(command, Options.text("opt"), Args.integer("num")) | Command(command2, Options.text("opt"), Args.integer("num")),
+        ) {
+          case text => ZIO.succeed(text)
+        }
+        res <- cliApp.run(List(command, "--opt", "inputText", "4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
