@@ -3,8 +3,7 @@ import zio.test._
 import zio.test.Assertion._
 import java.nio.file.{Files, Paths, Path}
 import java.io.IOException
-import zio.cli.ConfigFileArgsPlatformSpecific
-import zio.cli.ConfigFilePlatformSpecific
+import zio.cli._
 
 object FileBasedArgs extends ZIOSpecDefault {
 
@@ -45,12 +44,12 @@ object FileBasedArgs extends ZIOSpecDefault {
       for {
         // Create Sample config files
         cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
-        _       <- createSampleConfigFiles2(cwd, command)
+        _       <- createSampleConfigFiles2(cwd, "someCommand")
         cliApp = CliApp.make(
           name = "cliApp",
           version = "0",
           summary = HelpDoc.Span.empty,
-          command = Command("some-command", Args.text("arg")),
+          command = Command("someCommand", Args.text("arg")),
         ) {
           case text: String => ZIO.succeed(text)
         }
