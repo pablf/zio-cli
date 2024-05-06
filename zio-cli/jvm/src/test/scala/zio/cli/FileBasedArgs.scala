@@ -73,7 +73,7 @@ object FileBasedArgs extends ZIOSpecDefault {
           summary = HelpDoc.Span.empty,
           command = Command(command, Options.text("opt"), Args.integer("num")),
         ) {
-          case text: String => ZIO.succeed(text)
+          case text => ZIO.succeed(text)
         }
         res <- cliApp.run(List(command, "--opt", "inputText", "4"))
 
@@ -95,7 +95,7 @@ object FileBasedArgs extends ZIOSpecDefault {
           summary = HelpDoc.Span.empty,
           command = Command(command, Options.text("opt"), Args.integer("num")),
         ) {
-          case text: String => ZIO.succeed(text)
+          case text => ZIO.succeed(text)
         }
         res <- cliApp.run(List(command, "4"))
 
@@ -117,7 +117,7 @@ object FileBasedArgs extends ZIOSpecDefault {
           summary = HelpDoc.Span.empty,
           command = Command(command, Args.integer("num")),
         ) {
-          case text: String => ZIO.succeed(text)
+          case text => ZIO.succeed(text)
         }
         res <- cliApp.run(List(command, "4"))
 
