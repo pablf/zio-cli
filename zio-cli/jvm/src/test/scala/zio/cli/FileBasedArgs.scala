@@ -53,7 +53,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text: String => ZIO.succeed(text)
         }
-        res <- cliApp.run(List("someCommand", "--opt", "inputText"))
+        res <- cliApp.run(List("--opt", "inputText"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -75,7 +75,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List(command, "--opt", "inputText", "4"))
+        res <- cliApp.run(List("--opt", "inputText", "4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -97,7 +97,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List(command, "4"))
+        res <- cliApp.run(List("4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -119,7 +119,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List(command, "4"))
+        res <- cliApp.run(List("4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -140,7 +140,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text: String => ZIO.succeed(text)
         }
-        res <- cliApp.run(List("someOtherCommand", "--opt", "inputText"))
+        res <- cliApp.run(List("--opt", "inputText"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -160,7 +160,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List(command, "--opt", "inputText", "4"))
+        res <- cliApp.run(List("--opt", "inputText", "4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
@@ -180,7 +180,7 @@ object FileBasedArgs extends ZIOSpecDefault {
         ) {
           case text => ZIO.succeed(text)
         }
-        res <- cliApp.run(List(command, "4"))
+        res <- cliApp.run(List("4"))
 
         // Check if the func checkAndGetOptionsFilePaths can
 
