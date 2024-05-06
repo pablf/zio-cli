@@ -81,7 +81,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
         _ <- cleanUpSampleConfigFiles2(cwd, command)
 
-      } yield assertTrue(res == Some(("inputText", 4)))
+      } yield assertTrue(res == Some(("inputText", BigInt(4))))
     },
     test("failing test 3") {
       for {
@@ -103,7 +103,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
         _ <- cleanUpSampleConfigFiles2(cwd, command)
 
-      } yield assertTrue(res == Some(("inputText", 4)))
+      } yield assertTrue(res == Some(("inputText", BigInt(4))))
     },
     test("failing test 4") {
       for {
@@ -125,7 +125,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
         _ <- cleanUpSampleConfigFiles2(cwd, command)
 
-      } yield assertTrue(res == Some(4))
+      } yield assertTrue(res == Some(BigInt(4)))
     },
 
   )
