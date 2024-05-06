@@ -40,7 +40,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
       } yield assert(paths)(hasSameElements(List(homeDir.toString(), cwd.toString())))
     },
-    test("check") {
+    test("failing test 1") {
       for {
         // Create Sample config files
         cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
@@ -60,7 +60,74 @@ object FileBasedArgs extends ZIOSpecDefault {
         _ <- cleanUpSampleConfigFiles2(cwd, "someCommand")
 
       } yield assertTrue(res == Some("inputText"))
-    }
+    },
+    test("failing test 2") {
+      for {
+        // Create Sample config files
+        cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
+        command = "someCommandB"
+        _       <- createSampleConfigFiles2(cwd, command)
+        cliApp = CliApp.make(
+          name = "cliApp",
+          version = "0",
+          summary = HelpDoc.Span.empty,
+          command = Command(command, Options.text("opt"), Args.integer("num")),
+        ) {
+          case text: String => ZIO.succeed(text)
+        }
+        res <- cliApp.run(List(command, "--opt", "inputText", "4"))
+
+        // Check if the func checkAndGetOptionsFilePaths can
+
+        _ <- cleanUpSampleConfigFiles2(cwd, command)
+
+      } yield assertTrue(res == Some(("inputText", 4)))
+    },
+    test("failing test 3") {
+      for {
+        // Create Sample config files
+        cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
+        command = "someCommandC"
+        _       <- createSampleConfigFiles2(cwd, command)
+        cliApp = CliApp.make(
+          name = "cliApp",
+          version = "0",
+          summary = HelpDoc.Span.empty,
+          command = Command(command, Options.text("opt"), Args.integer("num")),
+        ) {
+          case text: String => ZIO.succeed(text)
+        }
+        res <- cliApp.run(List(command, "4"))
+
+        // Check if the func checkAndGetOptionsFilePaths can
+
+        _ <- cleanUpSampleConfigFiles2(cwd, command)
+
+      } yield assertTrue(res == Some(("inputText", 4)))
+    },
+    test("failing test 4") {
+      for {
+        // Create Sample config files
+        cwd     <- ZIO.succeed(Paths.get(java.lang.System.getProperty("user.dir")))
+        command = "someCommandD"
+        _       <- createSampleConfigFiles2(cwd, command)
+        cliApp = CliApp.make(
+          name = "cliApp",
+          version = "0",
+          summary = HelpDoc.Span.empty,
+          command = Command(command, Args.integer("num")),
+        ) {
+          case text: String => ZIO.succeed(text)
+        }
+        res <- cliApp.run(List(command, "4"))
+
+        // Check if the func checkAndGetOptionsFilePaths can
+
+        _ <- cleanUpSampleConfigFiles2(cwd, command)
+
+      } yield assertTrue(res == Some(4))
+    },
+
   )
 
   def createSampleConfigFiles(cwd: Path, homeDir: Path, command: String = "testApp"): IO[IOException, Unit] =
