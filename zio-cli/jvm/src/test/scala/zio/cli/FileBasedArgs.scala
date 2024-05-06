@@ -57,7 +57,7 @@ object FileBasedArgs extends ZIOSpecDefault {
 
         // Check if the func checkAndGetOptionsFilePaths can
 
-        _ <- cleanUpSampleConfigFiles2(cwd: Path, homeDir: Path, command)
+        _ <- cleanUpSampleConfigFiles2(cwd, "someCommand")
 
       } yield assertTrue(res == Some("fileText"))
     }
